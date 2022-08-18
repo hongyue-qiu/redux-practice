@@ -5,10 +5,20 @@ import classNames from 'classnames'
 interface TodoControlCommonProps {
   handlePagingSelect: () => void
   handleAllSelect: () => void
+  onNextPageClicked?: () => void
+  onPrePageClicked?: () => void
+  pageIndex?: number
   isPaging: boolean
 }
 
-const TodoControlCommon = ({ handleAllSelect, handlePagingSelect, isPaging }: TodoControlCommonProps) => {
+const TodoControlCommon = ({
+  handleAllSelect,
+  handlePagingSelect,
+  onNextPageClicked,
+  onPrePageClicked,
+  isPaging,
+  pageIndex = 1
+}: TodoControlCommonProps) => {
   return <div className="todo-control-common">
         <div>
             <button className="todo-control-button">add todo</button>
@@ -19,23 +29,23 @@ const TodoControlCommon = ({ handleAllSelect, handlePagingSelect, isPaging }: To
                 <span
                     className={classNames('todo-control-button-slice',
                       !isPaging && 'todo-control-button-slice-selected')}
-                    onClick={() => handleAllSelect()}
+                    onClick={handleAllSelect}
                 >
                     all
                 </span>
                     <span
                         className={classNames('todo-control-button-slice',
                           isPaging && 'todo-control-button-slice-selected')}
-                        onClick={() => handlePagingSelect()}
+                        onClick={handlePagingSelect}
                     >
                     paging
                 </span>
             </div>
             {isPaging &&
                 <div className="todo-control-page-buttons">
-                    <button className="todo-control-page-button">-</button>
-                    1
-                    <button className="todo-control-page-button">+</button>
+                    <button className="todo-control-page-button" onClick={onPrePageClicked}>-</button>
+                    {pageIndex}
+                    <button className="todo-control-page-button" onClick={onNextPageClicked}>+</button>
                 </div>
             }
         </div>

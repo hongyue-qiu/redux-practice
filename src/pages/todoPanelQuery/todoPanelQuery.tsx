@@ -23,9 +23,6 @@ const TodoPanelQuery = () => {
     }
   )
 
-  console.log('>>>>>>>>>>todos.isPreviousData', todos.isPreviousData)
-  console.log('>>>>>>>>>>todos.data.hasMore', todos.data.hasMore)
-
   const handleTodoItemCheckboxClicked = (index: number) => {
     //    todo: post to change check
   }
@@ -37,7 +34,17 @@ const TodoPanelQuery = () => {
   const handlePagingSelect = () => {
     setIsPaging(true)
     setCurrentPageIndex(1)
-    setFilterByCompletionType(FilterTodoEnum.All)
+  }
+
+  const handleNextPageClicked = () => {
+    //  todo: api need return value to justice last page
+    setCurrentPageIndex(currentPageIndex + 1)
+  }
+
+  const handlePrePageClicked = () => {
+    const preIndex = currentPageIndex - 1
+    const index = preIndex > 0 ? preIndex : 1
+    setCurrentPageIndex(index)
   }
 
   const handleAllSelect = () => {
@@ -94,7 +101,10 @@ const TodoPanelQuery = () => {
             <TodoControlCommon
                 handlePagingSelect={handlePagingSelect}
                 handleAllSelect={handleAllSelect}
+                onNextPageClicked={handleNextPageClicked}
+                onPrePageClicked={handlePrePageClicked}
                 isPaging={isPaging}
+                pageIndex={currentPageIndex}
             />
             <div className="todo-control-options">
                 <TodoControlItem
